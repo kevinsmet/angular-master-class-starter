@@ -4,16 +4,18 @@ import {ContactsService} from '../contacts.service';
 
 @Component({
   selector: 'trm-contacts-list',
-  templateUrl: './contacts-list.component.html',
-  styleUrls: ['./contacts-list.component.css']
+  templateUrl: './contacts-list.component.html'
 })
 export class ContactsListComponent implements OnInit {
   contacts: Contact[];
 
 
-  constructor(private contactsService: ContactsService) { }
+  constructor(private contactsService: ContactsService) {}
 
   ngOnInit() {
-    this.contacts = this.contactsService.getContacts();
+    this.contactsService.getContacts()
+      .subscribe( contacts => {
+        this.contacts = contacts;
+      });
   }
 }
