@@ -8,20 +8,20 @@ import {ContactsAppComponent} from './app.component';
 import {ContactsListComponent} from './contacts-list/contacts-list.component';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
-import { ContactsDetailComponentComponent } from './contacts-detail-component/contacts-detail-component.component';
+import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
 
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponentComponent],
+  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ContactsMaterialModule,
     FlexLayoutModule,
-    RouterModule,
     RouterModule.forRoot(APP_ROUTES)],
   bootstrap: [ContactsAppComponent]
 })
+/*forRoot only one in NgModule*/
 export class ContactsModule {
 
 }
