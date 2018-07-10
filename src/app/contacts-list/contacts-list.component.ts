@@ -10,11 +10,13 @@ import {Contact} from '../models/contact';
 export class ContactsListComponent implements OnInit {
   contacts$: Observable<Array<Contact>>;
 
-
   constructor(private contactsService: ContactsService) {}
-
 
   ngOnInit() {
     this.contacts$ = this.contactsService.getContacts();
+  }
+
+  search(term: string) {
+    this.contacts$ = this.contactsService.search(term);
   }
 }

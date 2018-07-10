@@ -27,4 +27,8 @@ export class ContactsService {
     return this.http.put<ContactResponse>(`${this.API_ENDPOINT}/contacts/${contact.id}`, contact)
       .pipe(map ((data) => data.item));
   }
+
+  search(term: string): Observable<Array<Contact>> {
+    return this.http.get<ContactsResponse>(`${this.API_ENDPOINT}/search?text=${term}`).pipe(map((data) => data.items));
+  }
 }
