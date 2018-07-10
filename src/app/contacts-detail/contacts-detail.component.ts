@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Contact} from '../models/contact';
 import {ContactsService} from '../contacts.service';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'trm-contacts-detail',
@@ -9,18 +10,12 @@ import {ContactsService} from '../contacts.service';
 })
 export class ContactsDetailComponent implements OnInit {
 
-  contact: Contact;
+  contact$: Observable<Contact>;
 
   constructor(private route: ActivatedRoute, private contactsService: ContactsService) {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-    this.contactsService.getContact(id).subscribe(
-      contact => {
-        this.contact = contact;
+   this.contact$ = this.contactsService.getContact(this.route.snapshot.params['id']);
       }
-    );
-  }
-
 }
