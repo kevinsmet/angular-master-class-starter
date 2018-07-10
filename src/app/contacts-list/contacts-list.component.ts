@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import {Contact} from '../models/contact';
+import {Component, OnInit} from '@angular/core';
 import {ContactsService} from '../contacts.service';
+import {Observable} from 'rxjs/internal/Observable';
+import {Contact} from '../models/contact';
 
 @Component({
   selector: 'trm-contacts-list',
   templateUrl: './contacts-list.component.html'
 })
 export class ContactsListComponent implements OnInit {
-  contacts: Contact[];
+  contacts$: Observable<Array<Contact>>;
 
 
   constructor(private contactsService: ContactsService) {}
 
+
   ngOnInit() {
-    this.contactsService.getContacts()
-      .subscribe( contacts => {
-        this.contacts = contacts;
-      });
+    this.contacts$ = this.contactsService.getContacts();
   }
 }
