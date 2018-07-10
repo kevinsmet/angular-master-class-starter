@@ -11,7 +11,7 @@ import {Observable} from 'rxjs/internal/Observable';
 export class ContactsDetailComponent {
 
 @Input() contact: Contact;
-@Output() edit = new EventEmitter<Contact>();
-@Output() back = new EventEmitter();
+@Output() edit = new EventEmitter<void>();
+@Output() back = new EventEmitter<void>();
 
 }

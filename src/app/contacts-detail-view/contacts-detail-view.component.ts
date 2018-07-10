@@ -19,7 +19,7 @@ export class ContactsDetailViewComponent implements OnInit {
     this.contact$ = this.contactsService.getContact(this.route.snapshot.params['id']);
   }
 
-  navigateToEditor(event) {
+  navigateToEditor() {
     this.router.navigate(['edit'], {
       relativeTo: this.route});
   }
