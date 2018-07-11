@@ -3,6 +3,7 @@ import {ContactsService} from '../contacts.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Contact} from '../models/contact';
 import {EventBusService} from '../event-bus-service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-editor',
@@ -12,7 +13,7 @@ export class ContactsEditorComponent implements OnInit {
 
   warnOnClosing = true;
 
-  contact: Contact = <Contact>{address: {}};
+  contact: Contact;
 
   constructor(private contactsService: ContactsService,
               private activatedRoute: ActivatedRoute,
@@ -21,13 +22,16 @@ export class ContactsEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.activatedRoute.snapshot.params['id'];
-    this.contactsService.getContact(id).subscribe(
-      contact => {
-        this.contact = contact;
-        this.eventBus.emit('appTitleChange', `Edit : ${contact.name}`);
-      }
-    );
+    this.activatedRoute.data
+      .pipe(map(data => data['contact']))
+      .subscribe(contact => this.contact = contact);
+    // const id = this.activatedRoute.snapshot.params['id'];
+    // this.contactsService.getContact(id).subscribe(
+    //   contact => {
+    //     this.contact = contact;
+    //     this.eventBus.emit('appTitleChange', `Edit : ${contact.name}`);
+    //   }
+    // );
   }
 
   cancel(contact: Contact) {

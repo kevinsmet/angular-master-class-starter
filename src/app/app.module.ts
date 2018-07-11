@@ -19,6 +19,7 @@ import {EventBusService} from './event-bus-service';
 import {ContactsService} from './contacts.service';
 import {ContactsDashboardComponent} from './contacts-dashboard/contacts-dashboard.component';
 import {AboutComponent} from './about/about.component';
+import {ContactsResolver} from './shared/contacts.resolver';
 
 export function confirmNavigationGuard(component) {
   return !component.warnOnClosing || window.confirm('Navigate away without saving?');
@@ -41,6 +42,7 @@ export function confirmNavigationGuard(component) {
   bootstrap: [ContactsAppComponent],
   providers: [EventBusService,
     ContactsService,
+    ContactsResolver,
     {
       provide: 'ConfirmNavigationGuard',
       useValue: confirmNavigationGuard

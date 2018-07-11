@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ContactsService} from '../contacts.service';
-import {Observable} from 'rxjs/internal/Observable';
 import {Contact} from '../models/contact';
 import {EventBusService} from '../event-bus-service';
-import {switchMap, tap} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-detail-view',
@@ -21,10 +20,13 @@ export class ContactsDetailViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.paramMap
-      .pipe(switchMap(paramMap => this.contactsService.getContact(paramMap.get('id'))),
-        tap(contact => this.eventBus.emit('appTitleChange', `Detail of ${contact.name}`)))
+    this.route.data
+      .pipe(map(data => data['contact']))
       .subscribe(contact => this.contact = contact);
+    // this.route.paramMap
+    //   .pipe(switchMap(paramMap => this.contactsService.getContact(paramMap.get('id'))),
+    //     tap(contact => this.eventBus.emit('appTitleChange', `Detail of ${contact.name}`)))
+    //   .subscribe(contact => this.contact = contact);
   }
 
   navigateToEditor() {
