@@ -1,24 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, OnInit, QueryList} from '@angular/core';
 import {TabComponent} from './tab.component';
 
 @Component({
   selector: 'trm-tabs',
   templateUrl: './tabs.component.html'
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent implements AfterContentInit {
+  @ContentChildren(TabComponent)
+  tabs: QueryList<TabComponent>;
 
-  tabs: Array<TabComponent> = [];
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  addTab(tab: TabComponent) {
-    if (this.tabs.length === 0) {
-      this.select(tab);
-    }
-    this.tabs.push(tab);
+  ngAfterContentInit() {
+    this.select(this.tabs.first);
   }
 
   select(tab: TabComponent) {
