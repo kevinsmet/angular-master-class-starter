@@ -18,7 +18,6 @@ import {TabComponent} from './tabs/tab.component';
 import {EventBusService} from './event-bus-service';
 import {ContactsService} from './contacts.service';
 import {ContactsDashboardComponent} from './contacts-dashboard/contacts-dashboard.component';
-import {AboutComponent} from './about/about.component';
 import {ContactsResolver} from './shared/contacts.resolver';
 
 export function confirmNavigationGuard(component) {
@@ -29,13 +28,15 @@ export function confirmNavigationGuard(component) {
 @NgModule({
   declarations: [ContactsAppComponent, ContactsListComponent,
     ContactsDetailComponent, ContactsEditorComponent,
-    ContactsDetailViewComponent, TabsComponent, TabComponent, ContactsDashboardComponent, AboutComponent],
+    ContactsDetailViewComponent, TabsComponent, TabComponent, ContactsDashboardComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ContactsMaterialModule,
     FlexLayoutModule,
-    RouterModule.forRoot(APP_ROUTES, {enableTracing: true}),
+    RouterModule.forRoot(APP_ROUTES,
+//      {enableTracing: true}
+      ),
     HttpClientModule,
     FormsModule
   ],

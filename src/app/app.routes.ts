@@ -19,6 +19,6 @@ export const APP_ROUTES = [
         canDeactivate: ['ConfirmNavigationGuard']}
     ]
   },
-  {path: 'about', component: AboutComponent},
+  {path: 'about', loadChildren: './about/about.module#AboutModule'},
   {path: '**', redirectTo: ''}
 ];
