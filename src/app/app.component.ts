@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ContactsService} from './contacts.service';
+import {EventBusService} from './event-bus-service';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'trm-contacts-app',
@@ -7,6 +9,13 @@ import {ContactsService} from './contacts.service';
   styleUrls: ['./app.component.scss'],
   providers: [ContactsService]
 })
-export class ContactsAppComponent {
+export class ContactsAppComponent implements OnInit {
+  title$: Observable<string>;
+
+  constructor(private eventBus: EventBusService) {}
+
+  ngOnInit() {
+   this.title$ = this.eventBus.observe('appTitleChange');
+  }
 
 }

@@ -15,6 +15,8 @@ import {FormsModule} from '@angular/forms';
 import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tabs/tab.component';
+import {EventBusService} from './event-bus-service';
+import {ContactsService} from './contacts.service';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { TabComponent } from './tabs/tab.component';
     HttpClientModule,
     FormsModule
   ],
-  bootstrap: [ContactsAppComponent]
+  bootstrap: [ContactsAppComponent],
+  providers: [EventBusService, ContactsService]
 })
 /*forRoot only one in NgModule*/
 export class ContactsModule {
