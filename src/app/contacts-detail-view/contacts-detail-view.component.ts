@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
 import {ContactsService} from '../contacts.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Contact} from '../models/contact';
 import {EventBusService} from '../event-bus-service';
-import {tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-detail-view',
@@ -12,8 +12,7 @@ import {tap} from 'rxjs/operators';
 })
 export class ContactsDetailViewComponent implements OnInit {
 
-  contact$: Observable<Contact>;
-  title = 'Detail';
+  contact: Contact;
 
   constructor(private route: ActivatedRoute,
               private contactsService: ContactsService,
@@ -22,19 +21,14 @@ export class ContactsDetailViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contact$ = this.contactsService.getContact(this.route.snapshot.params['id']).pipe(
-      tap(contact => this.eventBus.emit('appTitleChange', `Detail of ${contact.name}`))
-    );
-    this.eventBus.emit('appTitleChange', 'Detail');
+    this.route.paramMap
+      .pipe(switchMap(paramMap => this.contactsService.getContact(paramMap.get('id'))),
+        tap(contact => this.eventBus.emit('appTitleChange', `Detail of ${contact.name}`)))
+      .subscribe(contact => this.contact = contact);
   }
 
   navigateToEditor() {
     this.router.navigate(['edit'], {
       relativeTo: this.route});
-  }
-
-  navigateToList() {
-    this.router.navigate(['/']);
-
   }
 }

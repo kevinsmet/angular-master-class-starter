@@ -12,28 +12,40 @@ import {ContactsDetailComponent} from './contacts-detail/contacts-detail.compone
 import {HttpClientModule} from '@angular/common/http';
 import {ContactsEditorComponent} from './contacts-editor/contacts-editor.component';
 import {FormsModule} from '@angular/forms';
-import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
-import { TabsComponent } from './tabs/tabs.component';
-import { TabComponent } from './tabs/tab.component';
+import {ContactsDetailViewComponent} from './contacts-detail-view/contacts-detail-view.component';
+import {TabsComponent} from './tabs/tabs.component';
+import {TabComponent} from './tabs/tab.component';
 import {EventBusService} from './event-bus-service';
 import {ContactsService} from './contacts.service';
+import {ContactsDashboardComponent} from './contacts-dashboard/contacts-dashboard.component';
+import {AboutComponent} from './about/about.component';
+
+export function confirmNavigationGuard(component) {
+  return !component.warnOnClosing || window.confirm('Navigate away without saving?');
+}
 
 
 @NgModule({
   declarations: [ContactsAppComponent, ContactsListComponent,
     ContactsDetailComponent, ContactsEditorComponent,
-    ContactsDetailViewComponent, TabsComponent, TabComponent],
+    ContactsDetailViewComponent, TabsComponent, TabComponent, ContactsDashboardComponent, AboutComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ContactsMaterialModule,
     FlexLayoutModule,
-    RouterModule.forRoot(APP_ROUTES),
+    RouterModule.forRoot(APP_ROUTES, {enableTracing: true}),
     HttpClientModule,
     FormsModule
   ],
   bootstrap: [ContactsAppComponent],
-  providers: [EventBusService, ContactsService]
+  providers: [EventBusService,
+    ContactsService,
+    {
+      provide: 'ConfirmNavigationGuard',
+      useValue: confirmNavigationGuard
+    }
+  ]
 })
 /*forRoot only one in NgModule*/
 export class ContactsModule {
